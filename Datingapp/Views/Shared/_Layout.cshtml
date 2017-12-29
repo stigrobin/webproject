@@ -17,22 +17,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Ferry dating", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <input id="Text1" type="text" style="
+    width: 50%;
+    margin:  0 auto;
+    margin-top: 3%;
+">
+                <input id="Button1" type="button" value="Sök" />
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    
-                </ul>
+
+                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
                 @Html.Partial("_LoginPartial")
+                
             </div>
         </div>
+        
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Ferry Dating</p>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 
