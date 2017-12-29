@@ -224,6 +224,10 @@ table {
   border-spacing: 0;
 }
 
+.searchbar {
+    margin-top: 90%;
+}
+
 @media print {
   * {
     color: #000 !important;

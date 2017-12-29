@@ -13,9 +13,9 @@ namespace DatingApp.Controllers
 
         // GET: User
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            return View();
+            return View(id);
         }
 
         [Authorize]
@@ -27,7 +27,7 @@ namespace DatingApp.Controllers
         [Authorize]
         public ActionResult SearchResults()
         {
-          var results = dataContext.Users.Where(x => x.UserName == "hejsan@hejsan.se");
+          var results = dataContext.Users.ToList();
             return View(results);
         }
     }
