@@ -3,14 +3,21 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "User", new { id = User.Identity.GetUserId() }, null)
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <input name="txtSearch" type="text" style="
+                     width: 50%;
+                     margin:  0 auto;
+                     margin-top: 3%;">
+                <button onclick="location.href='@Url.Action("SearchResults", "User")';return false;">Sök</button>
+            </li>
+            <li>
+                @Html.ActionLink(User.Identity.GetUserName(), "Index", "User", new { id = User.Identity.GetUserId() }, null)
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
+        </ul>
     }
 }
 else

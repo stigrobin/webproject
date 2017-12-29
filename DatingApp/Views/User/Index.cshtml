@@ -1,8 +1,12 @@
 ﻿@model DatingApp.Models.ApplicationUser
-
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Profile";
 }
 
 <h2>Profile</h2>
+@if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
+{
 @Html.ActionLink("Ändra profil", "EditProfile", "user")
+}
+
