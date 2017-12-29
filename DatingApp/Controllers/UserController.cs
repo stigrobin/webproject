@@ -27,7 +27,7 @@ namespace DatingApp.Controllers
         [Authorize]
         public ActionResult SearchResults()
         {
-          var results = dataContext.Users.Where(x => x.UserName == "hejsan@hejsan.se");
+            var results = dataContext.Users.ToList();
             return View(results);
         }
     }
