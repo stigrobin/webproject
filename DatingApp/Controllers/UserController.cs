@@ -27,7 +27,6 @@ namespace DatingApp.Controllers
         [Authorize]
         public ActionResult SearchResults(string txtSearch)
         {
-            
             var results = dataContext.Users
                 .Where(x => x.FirstName.Contains(txtSearch) || x.LastName.Contains(txtSearch)).ToList();
             return View(results);

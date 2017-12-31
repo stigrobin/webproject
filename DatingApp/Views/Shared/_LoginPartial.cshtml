@@ -1,17 +1,21 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <input name="txtSearch" type="text" style="
+                @using (Html.BeginForm("SearchResults", "User"))
+                {
+                    <input name="txtSearch" type="text" style="
                      width: 50%;
                      margin:  0 auto;
                      margin-top: 3%;">
-                <button onclick="location.href='@Url.Action("SearchResults", "User")';return false;">Sök</button>
+                    <input type="submit" value="Sök" formaction="@Url.Action("SearchResults", "User")" />
+                }
             </li>
             <li>
                 @Html.ActionLink(User.Identity.GetUserName(), "Index", "User", new { id = User.Identity.GetUserId() }, null)
