@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using DomainLibrary.Models;
 
 namespace DatingApp.Models
 {
@@ -18,6 +19,8 @@ namespace DatingApp.Models
         {
             return new ApplicationDbContext();
         }
+
+
 
 
 

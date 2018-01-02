@@ -1,12 +1,36 @@
-﻿@model DatingApp.Models.ApplicationUser
+﻿@model DomainLibrary.Models.Profile
 @using Microsoft.AspNet.Identity
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "Index";
 }
 
-<h2>Profile</h2>
+<h2>Index</h2>
+
+<div>
+    <h4>Profile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Presentation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Presentation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+    </dl>
+</div>
+<p>
 @if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
 {
-@Html.ActionLink("Ändra profil", "EditProfile", "user")
+    @Html.ActionLink("Ändra profil", "EditProfile", "user")
 }
-
+</p>
