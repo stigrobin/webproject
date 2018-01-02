@@ -4,17 +4,19 @@
     ViewBag.Title = "EditProfile";
 }
 
-<h2>Ändra profil</h2>
+
+<h2> Ändra profil</h2>
 @using (Html.BeginForm("Create", "User", new { id = User.Identity.GetUserId() }, FormMethod.Post, new { id = "saveform" }))
 {
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.Presentation)
     </dt>
-
+    
     <dd>
         <textarea name="txtPresentation" form="saveform" rows="2" cols="400" style="resize:none">
                 @Html.DisplayFor(model => model.Presentation)</textarea>
+
     </dd>
 
     <dt>
@@ -32,4 +34,6 @@
     </dd>
 </dl>
 }
+
+
 

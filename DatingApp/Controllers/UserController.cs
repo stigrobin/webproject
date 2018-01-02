@@ -19,7 +19,10 @@ namespace DatingApp.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View();
+            string userId = User.Identity.GetUserId<string>();
+            Profile profile = dataContext.Profiles
+                .FirstOrDefault(x => x.Id == userId);
+            return View(profile);
         }
 
         [Authorize]
