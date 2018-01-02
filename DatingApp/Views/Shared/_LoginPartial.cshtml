@@ -8,14 +8,11 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @using (Html.BeginForm("SearchResults", "User"))
-                {
                     <input name="txtSearch" type="text" style="
                      width: 50%;
                      margin:  0 auto;
                      margin-top: 3%;">
                     <input type="submit" value="Sök" formaction="@Url.Action("SearchResults", "User")" />
-                }
             </li>
             <li>
                 @Html.ActionLink(User.Identity.GetUserName(), "Index", "User", new { id = User.Identity.GetUserId() }, null)
