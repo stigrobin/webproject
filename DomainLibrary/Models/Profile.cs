@@ -11,12 +11,12 @@ namespace DomainLibrary.Models
 {
     public class Profile
     {
-        [Key]
-        public string Id { get; set; }
+        public virtual string Id { get; set; }
 
         public string Presentation { get; set; }
 
-        public byte[] Image { get; set; }
+        //public byte[] Image { get; set; }
+
 
     }
 }

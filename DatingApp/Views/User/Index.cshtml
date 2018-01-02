@@ -18,19 +18,19 @@
             @Html.DisplayFor(model => model.Presentation)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Image)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Image)
-        </dd>
+        </dd>*@
 
     </dl>
 </div>
 <p>
 @if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
 {
-    @Html.ActionLink("Ändra profil", "EditProfile", "user")
+    @Html.ActionLink("Ändra profil", "EditProfile", "User")
 }
 </p>
