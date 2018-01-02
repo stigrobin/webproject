@@ -14,8 +14,9 @@
     </dt>
     
     <dd>
-        <textarea name="txtPresentation" form="saveform" rows="2" cols="400" style="resize:none">
-                @Html.DisplayFor(model => model.Presentation)</textarea>
+        @Html.TextBoxFor(model => model.Presentation)
+        @*<textarea name="txtPresentation" form="saveform" rows="2" cols="400" style="resize:none">
+                @Html.DisplayFor(model => model.Presentation)</textarea>*@
 
     </dd>
 

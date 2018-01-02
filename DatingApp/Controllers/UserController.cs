@@ -33,14 +33,23 @@ namespace DatingApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(Profile profile, string txtPresentation)
+        public ActionResult Create(Profile profile)
         {
             if (ModelState.IsValid == false)
             {
                 return View();
             }
-            profile.Presentation = txtPresentation;
-            dataContext.Profiles.Add(profile);
+            bool exists = dataContext.Profiles.Any(x => x.Id == profile.Id);    
+            if(exists)
+            {
+                Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
+                existing.Presentation = profile.Presentation;
+                dataContext.Entry(existing).State = System.Data.Entity.EntityState.Modified;
+            }
+            else
+            {
+                dataContext.Profiles.Add(profile);
+            }
             dataContext.SaveChanges();
             return RedirectToAction("Index", new { id = User.Identity.GetUserId() } );
         }
