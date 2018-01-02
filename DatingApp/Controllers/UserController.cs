@@ -17,11 +17,11 @@ namespace DatingApp.Controllers
 
         // GET: User
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
-            string userId = User.Identity.GetUserId<string>();
+            
             Profile profile = dataContext.Profiles
-                .FirstOrDefault(x => x.Id == userId);
+                .FirstOrDefault(x => x.Id == id);
             return View(profile);
         }
 
