@@ -1,4 +1,4 @@
-﻿@model DomainLibrary.Models.Profile
+﻿@model DatingApp.ViewModels.PostMessageViewModel
 @using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Index";
@@ -11,11 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Presentation)
+            @Html.DisplayNameFor(model => model.Profile.Presentation)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Presentation)
+            @Html.DisplayFor(model => model.Profile.Presentation)
         </dd>
 
         @*<dt>
@@ -34,3 +34,29 @@
     @Html.ActionLink("Ändra profil", "EditProfile", "User")
 }
 </p>
+@using (Html.BeginForm("Action", "Controller", new { id = User.Identity.GetUserId() }, FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.Message.Content)
+    <input type="submit" value="Skicka" />
+}
+<table class="table">
+    <tr>
+        <th>
+            <p>Inlägg</p>
+        </th>
+    </tr>
+    @if (Model.Messages != null)
+    {
+    foreach (var item in Model.Messages)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+        </tr>
+    }
+    }
+</table>

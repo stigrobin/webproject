@@ -6,7 +6,7 @@
 
 
 <h2> Ändra profil</h2>
-@using (Html.BeginForm("Create", "User", new { id = User.Identity.GetUserId() }, FormMethod.Post, new { id = "saveform" }))
+@using (Html.BeginForm("Create", "User", new { id = User.Identity.GetUserId() }, FormMethod.Post))
 {
 <dl class="dl-horizontal">
     <dt>
@@ -15,8 +15,6 @@
     
     <dd>
         @Html.TextBoxFor(model => model.Presentation)
-        @*<textarea name="txtPresentation" form="saveform" rows="2" cols="400" style="resize:none">
-                @Html.DisplayFor(model => model.Presentation)</textarea>*@
 
     </dd>
 

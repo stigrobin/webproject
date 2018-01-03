@@ -1,6 +1,8 @@
 ﻿using DatingApp.Models;
+using DatingApp.ViewModels;
 using DomainLibrary.Models;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -8,22 +10,30 @@ namespace DatingApp.Controllers
 {
     public class UserController : Controller
     {
-        private DataContext appDataContext = new DataContext();
+        private DataContext dataContext = new DataContext();
 
         // GET: User
         [Authorize]
         public ActionResult Index(string id)
         {
-            
-            Profile profile = appDataContext.Profiles
-                .FirstOrDefault(x => x.Id == id);
-            return View(profile);
+            PostMessageViewModel viewmodel = new PostMessageViewModel();
+
+            viewmodel.Profile = dataContext.Profiles
+           .FirstOrDefault(x => x.Id == id);
+
+            if (dataContext.Messages.Count() > 0)
+            {
+                viewmodel.Messages = dataContext.Messages
+                    .Where(x => x.Receiver.ToString() == viewmodel.Profile.Id).ToList();
+            }
+
+            return View(viewmodel);
         }
 
         [Authorize]
         public ActionResult EditProfile()
         {
-                return View();
+            return View();
         }
 
         [Authorize]
@@ -34,25 +44,25 @@ namespace DatingApp.Controllers
             {
                 return View();
             }
-            bool exists = appDataContext.Profiles.Any(x => x.Id == profile.Id);    
-            if(exists)
+            bool exists = dataContext.Profiles.Any(x => x.Id == profile.Id);
+            if (exists)
             {
-                Profile existing = appDataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
+                Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
                 existing.Presentation = profile.Presentation;
-                appDataContext.Entry(existing).State = System.Data.Entity.EntityState.Modified;
+                dataContext.Entry(existing).State = System.Data.Entity.EntityState.Modified;
             }
             else
             {
-                appDataContext.Profiles.Add(profile);
+                dataContext.Profiles.Add(profile);
             }
-            appDataContext.SaveChanges();
-            return RedirectToAction("Index", new { id = User.Identity.GetUserId() } );
+            dataContext.SaveChanges();
+            return RedirectToAction("Index", new { id = User.Identity.GetUserId() });
         }
 
         [Authorize]
         public ActionResult SearchResults(string txtSearch)
         {
-            var results = appDataContext.Users
+            var results = dataContext.Users
                 .Where(x => x.FirstName.Contains(txtSearch) || x.LastName.Contains(txtSearch)).ToList();
             return View(results);
         }
