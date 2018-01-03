@@ -1,26 +1,21 @@
 ﻿using DatingApp.Models;
 using DomainLibrary.Models;
-using DomainLibrary.Repositories;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DatingApp.Controllers
 {
     public class UserController : Controller
     {
-        private ApplicationDbContext appDataContext = new ApplicationDbContext();
-        private DataContext dataContext = new DataContext();
+        private DataContext appDataContext = new DataContext();
 
         // GET: User
         [Authorize]
         public ActionResult Index(string id)
         {
             
-            Profile profile = dataContext.Profiles
+            Profile profile = appDataContext.Profiles
                 .FirstOrDefault(x => x.Id == id);
             return View(profile);
         }
@@ -39,18 +34,18 @@ namespace DatingApp.Controllers
             {
                 return View();
             }
-            bool exists = dataContext.Profiles.Any(x => x.Id == profile.Id);    
+            bool exists = appDataContext.Profiles.Any(x => x.Id == profile.Id);    
             if(exists)
             {
-                Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
+                Profile existing = appDataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
                 existing.Presentation = profile.Presentation;
-                dataContext.Entry(existing).State = System.Data.Entity.EntityState.Modified;
+                appDataContext.Entry(existing).State = System.Data.Entity.EntityState.Modified;
             }
             else
             {
-                dataContext.Profiles.Add(profile);
+                appDataContext.Profiles.Add(profile);
             }
-            dataContext.SaveChanges();
+            appDataContext.SaveChanges();
             return RedirectToAction("Index", new { id = User.Identity.GetUserId() } );
         }
 

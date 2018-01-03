@@ -1,32 +1,36 @@
-﻿using DomainLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using DomainLibrary.Models;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace DomainLibrary.Repositories
+namespace DatingApp.Models
 {
-    public class DataContext : DbContext
+
+    public class DataContext : IdentityDbContext<ApplicationUser>
     {
-        public DataContext() : base("DefaultConnection")
+
+        
+
+        public DataContext()
+            : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
-
-        //DbSet<users>
         public DbSet<Profile> Profiles { get; set; }
+
+        public static DataContext Create()
+        {
+            return new DataContext();
+        }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<ApplicationUser>()
-            //    .HasRequired(x => x.Genre)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(false);
-            //base.OnModelCreating(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
         }
 
-    }
+
+
+        }
 }
