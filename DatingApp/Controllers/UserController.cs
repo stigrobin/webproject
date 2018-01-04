@@ -65,25 +65,18 @@ namespace DatingApp.Controllers
             //Avatar
             if (upload != null && upload.ContentLength > 0)
             {
-                if (exists)
+                Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
                 {
-                    Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
-                    {
-                        existing.FileName = Path.GetFileName(upload.FileName);
-                        existing.ContentType = upload.ContentType;
-                    };
-                    using (var reader = new BinaryReader(upload.InputStream))
-                    {
-                        existing.Content = reader.ReadBytes(upload.ContentLength);
-                    }
-                }
-                else
+                    existing.FileName = Path.GetFileName(upload.FileName);
+                    existing.ContentType = upload.ContentType;
+                };
+                using (var reader = new BinaryReader(upload.InputStream))
                 {
-                    dataContext.Profiles.Add(profile);
+                    existing.Content = reader.ReadBytes(upload.ContentLength);
                 }
             }
-            
-                dataContext.SaveChanges();
+            dataContext.Profiles.Add(profile);
+            dataContext.SaveChanges();
             return RedirectToAction("Index", new { id = User.Identity.GetUserId() });
         }
 
