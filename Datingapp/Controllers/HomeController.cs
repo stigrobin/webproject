@@ -22,20 +22,25 @@ namespace DatingApp.Controllers
             //int Profilecount = profiles.Count();
             List<string> sources = new List<string>();
             List<Profile> profilesWithPic = new List<Profile>();
-            foreach (var item in profiles)
-            {
-                profilesWithPic.Add(item);
 
-            }
-            for (int i = 0; i < 3; i++)
+            //if inga bilder finns
+            if (profilesWithPic.Count() > 0)
             {
-                int randomNumber = random.Next(0, profilesWithPic.Count());
-                //var id = profilesWithPic.Where(x => x.ProfileId == randomNumber);
-                var pic = (from Profile in profiles where Profile.ProfileId == randomNumber select Profile.Content).First();
-                var base64 = Convert.ToBase64String(pic);
-                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                sources.Add(imgSrc);
-                count++;
+                foreach (var item in profiles)
+                {
+                    profilesWithPic.Add(item);
+
+                }
+                for (int i = 0; i < 3; i++)
+                {
+                    int randomNumber = random.Next(0, profilesWithPic.Count());
+                    //var id = profilesWithPic.Where(x => x.ProfileId == randomNumber);
+                    var pic = (from Profile in profiles where Profile.ProfileId == randomNumber select Profile.Content).First();
+                    var base64 = Convert.ToBase64String(pic);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    sources.Add(imgSrc);
+                    count++;
+                }
             }
             return View(sources);
         }
