@@ -34,12 +34,20 @@
     @Html.ActionLink("Ändra profil", "EditProfile", "User")
 }
 </p>
-@using (Html.BeginForm("Action", "Controller", new { id = User.Identity.GetUserId() }, FormMethod.Post))
-{
-    @Html.TextBoxFor(model => model.Message.Content)
-    <input type="submit" value="Skicka" />
-}
-<table class="table">
+     
+    <textarea rows="2" cols="50" id="msgContent"></textarea>
+    <button onclick="
+
+    $.ajax({
+        url:'@Url.Action("PostMessage", "MessageController")'
+            type: 'POST',
+            data: $('#msgContent').val();
+            datatype: 'text'
+    });
+
+    ">Skicka</button>
+
+<table class="table"> 
     <tr>
         <th>
             <p>Inlägg</p>
