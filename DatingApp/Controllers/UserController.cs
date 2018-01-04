@@ -3,7 +3,11 @@ using DatingApp.ViewModels;
 using DomainLibrary.Models;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace DatingApp.Controllers
@@ -38,12 +42,14 @@ namespace DatingApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(Profile profile)
+        public ActionResult Create(Profile profile, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid == false)
             {
                 return View();
             }
+
+            //Presentation
             bool exists = dataContext.Profiles.Any(x => x.Id == profile.Id);
             if (exists)
             {
@@ -55,7 +61,29 @@ namespace DatingApp.Controllers
             {
                 dataContext.Profiles.Add(profile);
             }
-            dataContext.SaveChanges();
+
+            //Avatar
+            if (upload != null && upload.ContentLength > 0)
+            {
+                if (exists)
+                {
+                    Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
+                    {
+                        existing.FileName = Path.GetFileName(upload.FileName);
+                        existing.ContentType = upload.ContentType;
+                    };
+                    using (var reader = new BinaryReader(upload.InputStream))
+                    {
+                        existing.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+                }
+                else
+                {
+                    dataContext.Profiles.Add(profile);
+                }
+            }
+            
+                dataContext.SaveChanges();
             return RedirectToAction("Index", new { id = User.Identity.GetUserId() });
         }
 

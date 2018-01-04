@@ -6,7 +6,7 @@
 
 
 <h2> Ändra profil</h2>
-@using (Html.BeginForm("Create", "User", new { id = User.Identity.GetUserId() }, FormMethod.Post))
+@using (Html.BeginForm("Create", "User", new { id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 <dl class="dl-horizontal">
     <dt>
@@ -23,13 +23,25 @@
     </dt>
 
     <dd>
-            <fieldset>
+            @*<fieldset>
                 <legend> din bild </legend>
                 <label for="Image">Image</label>
-                <input type="file" name="image" />
+                <input type="file" id="avatar" name="upload" />
                 <br />
                 <input type="submit" value="Spara profil" />
-            </fieldset>
+            </fieldset>*@
+
+
+
+        <div class="form-group">
+            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="Avatar" name="upload" />
+            </div>
+        </div>
+
+        <input type="submit" value="Spara profil" />
+
     </dd>
 </dl>
 }

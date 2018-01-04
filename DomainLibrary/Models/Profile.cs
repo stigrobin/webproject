@@ -18,12 +18,16 @@ namespace DomainLibrary.Models
 
         public string Presentation { get; set; }
 
+
+        //public byte[] Image { get; set; }
+        public int FileId { get; set; }
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
+        public byte[] Content { get; set; }
+
+
         [ForeignKey("ApplicationUser")]
         public string Id { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-
-        //public byte[] Image { get; set; }
-
-
     }
 }
