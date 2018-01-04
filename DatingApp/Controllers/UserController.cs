@@ -49,33 +49,32 @@ namespace DatingApp.Controllers
                 return View();
             }
 
-            //Presentation
             bool exists = dataContext.Profiles.Any(x => x.Id == profile.Id);
             if (exists)
             {
                 Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
+                //presentation
                 existing.Presentation = profile.Presentation;
                 dataContext.Entry(existing).State = System.Data.Entity.EntityState.Modified;
+                
+                
             }
             else
             {
-                dataContext.Profiles.Add(profile);
-            }
-
-            //Avatar
-            if (upload != null && upload.ContentLength > 0)
-            {
-                Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
+                //avatar
+                if (upload != null && upload.ContentLength > 0)
                 {
-                    existing.FileName = Path.GetFileName(upload.FileName);
-                    existing.ContentType = upload.ContentType;
+                    profile.FileName = Path.GetFileName(upload.FileName);
+                    profile.ContentType = upload.ContentType;
                 };
                 using (var reader = new BinaryReader(upload.InputStream))
                 {
-                    existing.Content = reader.ReadBytes(upload.ContentLength);
+                    profile.Content = reader.ReadBytes(upload.ContentLength);
                 }
+                dataContext.Profiles.Add(profile);
             }
-            dataContext.Profiles.Add(profile);
+
+
             dataContext.SaveChanges();
             return RedirectToAction("Index", new { id = User.Identity.GetUserId() });
         }
