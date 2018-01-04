@@ -19,35 +19,27 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
+                @Html.DisplayNameFor(model => model.Image)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.Image)
+            </dd>*@
 
     </dl>
 </div>
 <p>
-@if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
-{
-    @Html.ActionLink("Ändra profil", "EditProfile", "User")
-}
+    @if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
+    {
+        @Html.ActionLink("Ändra profil", "EditProfile", "User")
+    }
 </p>
-     
-    <textarea rows="2" cols="50" id="msgContent"></textarea>
-    <button onclick="
 
-    $.ajax({
-        url:'@Url.Action("PostMessage", "MessageController")'
-            type: 'POST',
-            data: $('#msgContent').val();
-            datatype: 'text'
-    });
+@Html.TextBoxFor(model => model.Message.Content)
+<button id="btnSend">Skicka</button>
 
-    ">Skicka</button>
 
-<table class="table"> 
+<table class="table">
     <tr>
         <th>
             <p>Inlägg</p>
@@ -55,16 +47,16 @@
     </tr>
     @if (Model.Messages != null)
     {
-    foreach (var item in Model.Messages)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-        </tr>
-    }
+        foreach (var item in Model.Messages)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+            </tr>
+        }
     }
 </table>
