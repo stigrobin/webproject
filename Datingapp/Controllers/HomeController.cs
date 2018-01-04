@@ -12,12 +12,5 @@ namespace DatingApp.Controllers
         {
             return View();
         }
-        
-        [Authorize]
-        public ActionResult EditProfile()
-        {
-            return View();
-        }
-
     }
 }
