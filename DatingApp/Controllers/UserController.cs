@@ -49,41 +49,33 @@ namespace DatingApp.Controllers
                 return View();
             }
 
-            //Presentation
             bool exists = dataContext.Profiles.Any(x => x.Id == profile.Id);
             if (exists)
             {
                 Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
+                //presentation
                 existing.Presentation = profile.Presentation;
                 dataContext.Entry(existing).State = System.Data.Entity.EntityState.Modified;
+                
+                
             }
             else
             {
+                //avatar
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    profile.FileName = Path.GetFileName(upload.FileName);
+                    profile.ContentType = upload.ContentType;
+                };
+                using (var reader = new BinaryReader(upload.InputStream))
+                {
+                    profile.Content = reader.ReadBytes(upload.ContentLength);
+                }
                 dataContext.Profiles.Add(profile);
             }
 
-            //Avatar
-            if (upload != null && upload.ContentLength > 0)
-            {
-                if (exists)
-                {
-                    Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
-                    {
-                        existing.FileName = Path.GetFileName(upload.FileName);
-                        existing.ContentType = upload.ContentType;
-                    };
-                    using (var reader = new BinaryReader(upload.InputStream))
-                    {
-                        existing.Content = reader.ReadBytes(upload.ContentLength);
-                    }
-                }
-                else
-                {
-                    dataContext.Profiles.Add(profile);
-                }
-            }
-            
-                dataContext.SaveChanges();
+
+            dataContext.SaveChanges();
             return RedirectToAction("Index", new { id = User.Identity.GetUserId() });
         }
 
