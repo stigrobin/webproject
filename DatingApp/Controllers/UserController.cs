@@ -42,24 +42,31 @@ namespace DatingApp.Controllers
         [Authorize]
         public ActionResult EditProfile()
         {
-            return View();
+            var userId = User.Identity.GetUserId();
+            PostMessageViewModel viewModel = new PostMessageViewModel();
+            var user = dataContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var profile = dataContext.Profiles.Where(x => x.Id == userId).FirstOrDefault();
+            viewModel.ApplicationUser = user;
+            viewModel.Profile = profile;
+            return View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(Profile profile, HttpPostedFileBase upload)
+        public ActionResult Create(PostMessageViewModel viewModel, HttpPostedFileBase upload, bool searchable)
         {
             if (ModelState.IsValid == false)
             {
                 return View();
             }
-
-            bool exists = dataContext.Profiles.Any(x => x.Id == profile.Id);
+            var user = dataContext.Users.Find(User.Identity.GetUserId());
+            user.Searchable = searchable;
+            bool exists = dataContext.Profiles.Any(x => x.Id == viewModel.Profile.Id);
             if (exists)
             {
                 //modifiera profil om den redan finns
-                Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
-                existing.Presentation = profile.Presentation;
+                Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == viewModel.Profile.Id);
+                existing.Presentation = viewModel.Profile.Presentation;
                 if (upload != null && upload.ContentLength > 0)
                 {
                     existing.FileName = Path.GetFileName(upload.FileName);
@@ -77,15 +84,15 @@ namespace DatingApp.Controllers
                 //skapa profil om den inte redan finns
                 if (upload != null && upload.ContentLength > 0)
                 {
-                    profile.FileName = Path.GetFileName(upload.FileName);
-                    profile.ContentType = upload.ContentType;
+                    viewModel.Profile.FileName = Path.GetFileName(upload.FileName);
+                    viewModel.Profile.ContentType = upload.ContentType;
                     using (var reader = new BinaryReader(upload.InputStream))
                     {
-                        profile.Content = reader.ReadBytes(upload.ContentLength);
+                        viewModel.Profile.Content = reader.ReadBytes(upload.ContentLength);
                     }
 
                 }
-                dataContext.Profiles.Add(profile);
+                dataContext.Profiles.Add(viewModel.Profile);
             }
 
 
@@ -97,17 +104,17 @@ namespace DatingApp.Controllers
         public ActionResult SearchResults(string txtSearch)
         {
             var results = dataContext.Users
-                .Where(x => x.FirstName.Contains(txtSearch) || x.LastName.Contains(txtSearch)).ToList();
+                .Where(x => x.FirstName.Contains(txtSearch) && x.Searchable || x.LastName.Contains(txtSearch) && x.Searchable).ToList();
             return View(results);
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult AddFriend(Friends friends)
+        public ActionResult AddFriend(PostMessageViewModel ViewModel)
         {
-            dataContext.Friends.Add(friends);
+            dataContext.Friends.Add(ViewModel.Friend);
             dataContext.SaveChanges();
-            return RedirectToAction("Index", new { id = friends.RequestedTo_Id });
+            return RedirectToAction("Index", new { id = ViewModel.Friend.RequestedTo_Id });
         }
     }
 }
