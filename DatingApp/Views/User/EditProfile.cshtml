@@ -1,6 +1,6 @@
-﻿@model DomainLibrary.Models.Profile
+﻿@model DatingApp.ViewModels.PostMessageViewModel
 @using Microsoft.AspNet.Identity
-@{ 
+@{
     ViewBag.Title = "EditProfile";
 }
 
@@ -8,31 +8,31 @@
 <h2> Ändra profil</h2>
 @using (Html.BeginForm("Create", "User", new { id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.Presentation)
-    </dt>
-    
-    <dd>
-        @Html.TextBoxFor(model => model.Presentation)
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Profile.Presentation)
+        </dt>
 
-    </dd>
+        <dd>
+            @Html.TextBoxFor(model => model.Profile.Presentation)
 
-    <dt>
-     
-    </dt>
+        </dd>
 
-    <dd>
-        
-        <div class="form-group">
-            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" id="Avatar" name="upload" />
+        <dt>
+            Sökbar? @Html.CheckBox("Searchable", Model.ApplicationUser.Searchable); 
+        </dt>
+
+        <dd>
+
+            <div class="form-group">
+                 @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" id="Avatar" name="upload" />
+                </div>
             </div>
-        </div>
 
-        <input type="submit" value="Spara profil" />
+            <input type="submit" value="Spara profil" />
 
-    </dd>
-</dl>
+        </dd>
+    </dl>
 }
