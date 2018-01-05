@@ -16,8 +16,7 @@ namespace DatingApp.Models
         {
         }
 
-        public DbSet<Profile> Profiles { get; set; }
-        public DbSet<Message> Messages { get; set; }
+
 
         public static DataContext Create()
         {
@@ -30,7 +29,9 @@ namespace DatingApp.Models
             base.OnModelCreating(modelBuilder);
         }
 
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
 
-        }
+    }
 }
