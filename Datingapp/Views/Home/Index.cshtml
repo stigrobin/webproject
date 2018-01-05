@@ -1,4 +1,5 @@
-﻿@model List<string>
+﻿@model List<DomainLibrary.Models.Profile>
+@{ DomainLibrary.Repositories.ProfileRepository profileRepository = new DomainLibrary.Repositories.ProfileRepository(); }
 @{
     ViewBag.Title = "Home Page";
 }
@@ -13,7 +14,7 @@
                     foreach (var item in Model)
                     {
                         <li>
-                            <img src="@item" alt="avatar" height="57" width="57" />
+                            <img src="@profileRepository.GetImageSrc(item)" alt="avatar" height="57" width="57" />
                         </li>
                     }
                 }
