@@ -71,6 +71,7 @@
 <button id="btnSend">Skicka</button>
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
+    
     $(document).on('click', '#btnSend', function () {
 
         var url = window.location.pathname;
@@ -85,18 +86,21 @@
             data: JSON.stringify({ message: mdl, profile: prf }),
             url: "/api/message/send",
             contentType: "application/json"
-        }).done(function (res) {
-            $("#mydiv").html(res.Content);
+        }).done(function (prf) {
+            $(".table").append("<tr><td>" + prf.Content + "</td><td>" + '@Model.ApplicationUser.UserName' + "</td></tr>");
         });
     });
+        
 </script>
 
-<div id="mydiv">hereitcomes</div>
 
 <table class="table">
     <tr>
         <th>
             <p>Inlägg</p>
+        </th>
+        <th>
+            <p>Skriven av</p>
         </th>
     </tr>
     @if (Model.Messages != null)
@@ -108,7 +112,7 @@
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Author)
+                    @Html.DisplayFor(model => model.ApplicationUser.UserName)
                 </td>
             </tr>
         }

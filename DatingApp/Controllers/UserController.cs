@@ -33,8 +33,17 @@ namespace DatingApp.Controllers
                     viewmodel.Messages = dataContext.Messages
                         .Where(x => x.Receiver == viewmodel.Profile.ProfileId).ToList();
                 }
+
+                string myId = User.Identity.GetUserId();
+
+                viewmodel.ApplicationUser = new ApplicationUser
+                {
+                    UserName = dataContext.Users
+                    .Where(x => x.Id == myId).Select(x => x.UserName).Single()
+                };
+
             }
-            //om man redan skickat förfrågan/är vän med
+            
 
             return View(viewmodel);
         }
