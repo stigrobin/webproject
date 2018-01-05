@@ -24,13 +24,15 @@ namespace DatingApp.Controllers
 
             viewmodel.Profile = dataContext.Profiles
            .FirstOrDefault(x => x.Id == id);
-
-            if (dataContext.Messages.Count() > 0)
+            if (viewmodel.Profile != null)
             {
-                viewmodel.Messages = dataContext.Messages
-                    .Where(x => x.Receiver.ToString() == viewmodel.Profile.Id).ToList();
+                bool profileHasMessages = dataContext.Messages.Any(x => x.Receiver == viewmodel.Profile.ProfileId);
+                if (profileHasMessages)
+                {
+                    viewmodel.Messages = dataContext.Messages
+                        .Where(x => x.Receiver == viewmodel.Profile.ProfileId).ToList();
+                }
             }
-
             return View(viewmodel);
         }
 
@@ -52,32 +54,41 @@ namespace DatingApp.Controllers
             bool exists = dataContext.Profiles.Any(x => x.Id == profile.Id);
             if (exists)
             {
+                //modifiera profil om den redan finns
                 Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == profile.Id);
-                //presentation
                 existing.Presentation = profile.Presentation;
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    existing.FileName = Path.GetFileName(upload.FileName);
+                    existing.ContentType = upload.ContentType;
+                    using (var reader = new BinaryReader(upload.InputStream))
+                    {
+                        existing.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+
+                }
                 dataContext.Entry(existing).State = System.Data.Entity.EntityState.Modified;
-                
-                
             }
             else
             {
-                //avatar
+                //skapa profil om den inte redan finns
                 if (upload != null && upload.ContentLength > 0)
                 {
                     profile.FileName = Path.GetFileName(upload.FileName);
                     profile.ContentType = upload.ContentType;
-                };
-                using (var reader = new BinaryReader(upload.InputStream))
-                {
-                    profile.Content = reader.ReadBytes(upload.ContentLength);
+                    using (var reader = new BinaryReader(upload.InputStream))
+                    {
+                        profile.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+                    
                 }
                 dataContext.Profiles.Add(profile);
             }
 
-
+            
             dataContext.SaveChanges();
             return RedirectToAction("Index", new { id = User.Identity.GetUserId() });
-        }
+        }   
 
         [Authorize]
         public ActionResult SearchResults(string txtSearch)
