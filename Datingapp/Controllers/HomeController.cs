@@ -16,38 +16,20 @@ namespace DatingApp.Controllers
 
         public ActionResult Index()
         {
-
-            var profiles = dataContext.Profiles.Where(x => x.FileName != null);
+            int count = 0;
+            var profiles = dataContext.Profiles.Where(x => x.FileName != null).ToList();
             Random random = new Random();
+            //int Profilecount = profiles.Count();
+            List<Profile> sources = new List<Profile>();
 
-            List<string> sources = new List<string>();
-            List<Profile> profilesWithPic = new List<Profile>();
-
-
+            //if inga bilder finns
             if (profiles.Count() > 0)
             {
-                foreach (var item in profiles)
-                {
-                    profilesWithPic.Add(item);
-
-                }
                 for (int i = 0; i < 3; i++)
                 {
-                    int randomNumber = random.Next(0, profilesWithPic.Count());
-
-                    try
-                    {
-                        var pic = (from Profile in profiles where Profile.ProfileId == randomNumber select Profile.Content).First();
-                        var base64 = Convert.ToBase64String(pic);
-                        var imgSrc = String.Format("data:image/gif;base64,{0}", pic);
-                        sources.Add(imgSrc);
-                    }
-                    catch
-                    {
-                        sources.Add("https://upload.wikimedia.org/wikipedia/en/a/a2/City_of_Mukilteo_%28steam_ferry%29.jpeg");
-                    }
-
-
+                    int randomNumber = random.Next(0, profiles.Count());
+                    sources.Add(profiles[randomNumber]);
+                    count++;
                 }
             }
             return View(sources);

@@ -1,4 +1,5 @@
-﻿@model List<string>
+﻿@model List<DomainLibrary.Models.Profile>
+@{ DomainLibrary.Repositories.ProfileRepository profileRepository = new DomainLibrary.Repositories.ProfileRepository(); }
 @{
     ViewBag.Title = "Home Page";
 }
@@ -6,19 +7,20 @@
 <div class="jumbotron">
     <h1>Ferry dating</h1>
     <p> Välkommen till Ferry dating. Din båtdating på nätet! </p>
-
     <div>
-        <ul style="list-style-type:none">
-            @{
-                foreach (var item in Model)
-                {
-                    <li>
-                        <div>
-                            <img src="@item" alt="avatar" height="100" width="100" border-width="3" />
-                        </div>
-                    </li>
+        <div>
+            <ul>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "User", new { id = item.Id })">
+                            <img src="@profileRepository.GetImageSrc(item)" alt="avatar" height="57" width="57" />
+                            </a>
+                        </li>
+                    }
                 }
-            }
-        </ul>
+            </ul>
+        </div>
     </div>
 </div>
