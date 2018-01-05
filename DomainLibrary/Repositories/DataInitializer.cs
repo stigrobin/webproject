@@ -34,8 +34,8 @@ namespace DomainLibrary.Repositories
             var user3 = new ApplicationUser { FirstName = "Yo", LastName = "Yosson", Email = "yo@yo.se", UserName = "yo@yo.se" };
 
             manager.CreateAsync(user1, "User1!").Wait();
-            manager.CreateAsync(user2, "User2!").Wait();
-            manager.CreateAsync(user3, "User3!").Wait();
+            manager.CreateAsync(user2, "User1!").Wait();
+            manager.CreateAsync(user3, "User1!").Wait();
             //Profiles
             var profile1 = new Profile { Presentation = "Jag heter tja, riktigt båtig snubbe om jag får säga det själv",
                 Id = user1.Id, Content = GetBytesFromImg("stock.jpg"), ContentType = "image/jpeg", FileName = "stock.jpg" };
