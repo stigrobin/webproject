@@ -21,6 +21,7 @@ namespace DatingApp.Controllers
         public ActionResult Index(string id)
         {
             PostMessageViewModel viewmodel = new PostMessageViewModel();
+            
 
             viewmodel.Profile = dataContext.Profiles
            .FirstOrDefault(x => x.Id == id);
@@ -96,6 +97,15 @@ namespace DatingApp.Controllers
             var results = dataContext.Users
                 .Where(x => x.FirstName.Contains(txtSearch) || x.LastName.Contains(txtSearch)).ToList();
             return View(results);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddFriend(PostMessageViewModel viewModel)
+        {
+            dataContext.Friends.Add(viewModel.Friend);
+            dataContext.SaveChanges();
+            return RedirectToAction("Index", new { id = viewModel.Friend.RequestedTo_Id });
         }
     }
 }

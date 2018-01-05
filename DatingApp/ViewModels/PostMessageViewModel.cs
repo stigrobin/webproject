@@ -11,6 +11,8 @@ namespace DatingApp.ViewModels
         public Profile Profile { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public Message Message { get; set; }
+
+        public Friends Friend { get; set; }
         public IEnumerable<Message> Messages { get; set; }
     }
 }

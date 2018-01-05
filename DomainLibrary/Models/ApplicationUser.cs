@@ -5,17 +5,29 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using DomainLibrary.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace DomainLibrary.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
         public bool Searchable { get; set; } = true;
+
+        [ForeignKey("RequestedBy_Id")]
+        public virtual ICollection<Friends> Friends { get; set; }
+        //[ForeignKey("RequestedTo_Id")]
+        //public virtual ICollection<Friends> FriendsTo { get; set; }
+
+        public ApplicationUser()
+        {
+            Friends = new List<Friends>();
+        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -26,3 +38,5 @@ namespace DomainLibrary.Models
         }
     }
 }
+
+  

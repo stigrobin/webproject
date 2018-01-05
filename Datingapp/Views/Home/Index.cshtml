@@ -6,18 +6,19 @@
 <div class="jumbotron">
     <h1>Ferry dating</h1>
     <p> Välkommen till Ferry dating. Din båtdating på nätet! </p>
+
     <div>
-        <div>
-            <ul>
-                @{
-                    foreach (var item in Model)
-                    {
-                        <li>
-                            <img src="@item" alt="avatar" height="57" width="57" />
-                        </li>
-                    }
+        <ul style="list-style-type:none">
+            @{
+                foreach (var item in Model)
+                {
+                    <li>
+                        <div>
+                            <img src="@item" alt="avatar" height="100" width="100" border-width="3" />
+                        </div>
+                    </li>
                 }
-            </ul>
-        </div>
+            }
+        </ul>
     </div>
 </div>

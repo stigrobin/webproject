@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Friends.cs" />
     <Compile Include="Repositories\DataContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="IdentityConfig.cs" />

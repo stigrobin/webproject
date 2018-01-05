@@ -24,25 +24,46 @@
             Avatar
         </dt>
         <dd>
-            @{            
-                if (Model.Profile != null && Model.Profile.Content != null) {
+            @{
+                if (Model.Profile != null && Model.Profile.Content != null)
+                {
                     var base64 = Convert.ToBase64String(Model.Profile.Content);
                     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                    <img src="@imgSrc" alt="avatar" height="100" width="100" />         
-                    }
+                    <img src="@imgSrc" alt="avatar" height="100" width="100" />
                 }
+            }
         </dd>
     </dl>
 </div>
 <p>
-    @if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
+    @{
+
+
+
+        if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
+        {
+            @Html.ActionLink("Ändra profil", "EditProfile", "User")
+        }
+        else if (User.Identity.GetUserId() != Url.RequestContext.RouteData.Values["id"].ToString())
+        {
+            DomainLibrary.Models.Friends friend = new DomainLibrary.Models.Friends();
+            using (Html.BeginForm("AddFriend", "User", new { id = friend.RequestedTo_Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-        @Html.ActionLink("Ändra profil", "EditProfile", "User")
+                friend.RequestedBy_Id = User.Identity.GetUserId().ToString();
+                friend.RequestedTo_Id = Url.RequestContext.RouteData.Values["id"].ToString();
+
+
+                <input type="submit" value="Lägg till vän" />};
+        }
+
+
+        @*@Html.ActionLink("Lägg till vän", "AddFriend", "User")*@
     }
+
 </p>
-     
-    <textarea rows="2" cols="50" id="txtPost"></textarea>
-    <button id="btnSend">Skicka</button>
+
+<textarea rows="2" cols="50" id="txtPost"></textarea>
+<button id="btnSend">Skicka</button>
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).on('click', '#btnSend', function () {
@@ -54,20 +75,20 @@
         var prf = { Id: receiver }
 
 
-            $.ajax({
-                type: "POST",
-                data: JSON.stringify({ message: mdl, profile: prf }),
-                url: "/api/message/send",
-                contentType: "application/json"
-            }).done(function (res) {
-                $("#mydiv").html(res.Content);
-            });
-        });           
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify({ message: mdl, profile: prf }),
+            url: "/api/message/send",
+            contentType: "application/json"
+        }).done(function (res) {
+            $("#mydiv").html(res.Content);
+        });
+    });
 </script>
 
 <div id="mydiv">hereitcomes</div>
 
-<table class="table"> 
+<table class="table">
     <tr>
         <th>
             <p>Inlägg</p>
