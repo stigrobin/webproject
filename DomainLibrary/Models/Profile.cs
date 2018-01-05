@@ -16,14 +16,17 @@ namespace DomainLibrary.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProfileId { get; set; }
 
+        //presentation
         public string Presentation { get; set; }
+        
+        //Avatar 
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
+        public byte[] Content { get; set; }
+
 
         [ForeignKey("ApplicationUser")]
         public string Id { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-
-        //public byte[] Image { get; set; }
-
-
     }
 }

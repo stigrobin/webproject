@@ -23,6 +23,6 @@ namespace DomainLibrary.Models
 
         [ForeignKey("Profile")]
         public int Receiver { get; set; }
-        public Profile Profile { get; set; }
+        public virtual Profile Profile { get; set; }
     }
 }
