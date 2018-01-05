@@ -74,7 +74,7 @@ namespace DatingApp.Controllers
             if (exists)
             {
                 //modifiera profil om den redan finns
-                Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == viewModel.Profile.Id);
+                Profile existing = dataContext.Profiles.FirstOrDefault(x => x.Id == user.Id);
                 existing.Presentation = viewModel.Profile.Presentation;
                 if (upload != null && upload.ContentLength > 0)
                 {
