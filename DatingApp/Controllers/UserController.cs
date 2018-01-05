@@ -21,7 +21,7 @@ namespace DatingApp.Controllers
         public ActionResult Index(string id)
         {
             PostMessageViewModel viewmodel = new PostMessageViewModel();
-            
+
 
             viewmodel.Profile = dataContext.Profiles
            .FirstOrDefault(x => x.Id == id);
@@ -81,15 +81,15 @@ namespace DatingApp.Controllers
                     {
                         profile.Content = reader.ReadBytes(upload.ContentLength);
                     }
-                    
+
                 }
                 dataContext.Profiles.Add(profile);
             }
 
-            
+
             dataContext.SaveChanges();
             return RedirectToAction("Index", new { id = User.Identity.GetUserId() });
-        }   
+        }
 
         [Authorize]
         public ActionResult SearchResults(string txtSearch)
@@ -101,11 +101,11 @@ namespace DatingApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult AddFriend(PostMessageViewModel viewModel)
+        public ActionResult AddFriend(Friends friends)
         {
-            dataContext.Friends.Add(viewModel.Friend);
+            dataContext.Friends.Add(friends);
             dataContext.SaveChanges();
-            return RedirectToAction("Index", new { id = viewModel.Friend.RequestedTo_Id });
+            return RedirectToAction("Index", new { id = friends.RequestedTo_Id });
         }
     }
 }

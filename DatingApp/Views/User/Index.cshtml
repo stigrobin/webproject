@@ -47,7 +47,7 @@
         else if (User.Identity.GetUserId() != Url.RequestContext.RouteData.Values["id"].ToString())
         {
             DomainLibrary.Models.Friends friend = new DomainLibrary.Models.Friends();
-            using (Html.BeginForm("AddFriend", "User", new { id = friend.RequestedTo_Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            using (Html.BeginForm("AddFriend", "User", new { id = friend.RequestedTo_Id }, FormMethod.Post, new { enctype = "text/plain" }))
             {
                 friend.RequestedBy_Id = User.Identity.GetUserId().ToString();
                 friend.RequestedTo_Id = Url.RequestContext.RouteData.Values["id"].ToString();
