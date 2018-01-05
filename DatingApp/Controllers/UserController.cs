@@ -34,6 +34,8 @@ namespace DatingApp.Controllers
                         .Where(x => x.Receiver == viewmodel.Profile.ProfileId).ToList();
                 }
             }
+            //om man redan skickat förfrågan/är vän med
+
             return View(viewmodel);
         }
 
