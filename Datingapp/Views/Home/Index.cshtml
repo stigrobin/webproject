@@ -14,7 +14,9 @@
                     foreach (var item in Model)
                     {
                         <li>
+                            <a href="@Url.Action("Index", "User", new { id = item.Id })">
                             <img src="@profileRepository.GetImageSrc(item)" alt="avatar" height="57" width="57" />
+                            </a>
                         </li>
                     }
                 }
