@@ -20,13 +20,13 @@ namespace DomainLibrary.Models
         public bool Searchable { get; set; } = true;
 
         [ForeignKey("RequestedBy_Id")]
-        public virtual ICollection<Friends> Friends { get; set; }
+        public virtual ICollection<Friend> Friends { get; set; }
         //[ForeignKey("RequestedTo_Id")]
         //public virtual ICollection<Friends> FriendsTo { get; set; }
 
         public ApplicationUser()
         {
-            Friends = new List<Friends>();
+            Friends = new List<Friend>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

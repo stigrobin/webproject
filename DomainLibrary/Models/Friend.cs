@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DomainLibrary.Models
 {
-    public class Friends
+    public class Friend
     {
         public virtual int Id { get; set; }
 

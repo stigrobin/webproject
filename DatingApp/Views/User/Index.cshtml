@@ -46,7 +46,7 @@
         }
         else if (Url.RequestContext.RouteData.Values["id"].ToString() != User.Identity.GetUserId())
         {
-            Model.Friend = new DomainLibrary.Models.Friends
+            Model.Friend = new DomainLibrary.Models.Friend
             {
                 RequestedBy_Id = User.Identity.GetUserId().ToString(),
                 RequestedTo_Id = Url.RequestContext.RouteData.Values["id"].ToString()

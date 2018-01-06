@@ -14,7 +14,57 @@
                      margin-top: 3%;">
                     <input type="submit" value="Sök" formaction="@Url.Action("SearchResults", "User")" />
             </li>
-            @*<li><img src="@Url.Action("UserPhotos", "User" )" height="48" width="48" /></li>*@
+            <li id="dropDownList"><a id="dropDown">Vänförfrågningar</a><ul id="dropDownUl"></ul>
+                @Scripts.Render("~/bundles/jquery")
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#dropDown').click(function () {
+
+                            alert('meny ska komma ner');
+
+                            var user = { Id: '@User.Identity.GetUserId()' }
+
+                            $.ajax({
+                                type: "POST",
+                                data: JSON.stringify(user),
+                                url: "api/friend/getrequests",
+                                contentType: "application/json"
+                            }).done(function (get) {
+                                $("#dropDownUl").html('');
+                                $.each(get, function (key, item) {
+                                    $("#dropDownUl").append
+                                        ('<li id=' + item.Id + '>Vänförfrågan från: ' + item.UserName + ' <button id="' + item.Id + 'a" type="button">acceptera</button> <button id="' + item.Id + 'd" type="button">neka</button> </li>');
+
+                                    $('#'+item.Id+'a').click(function () {
+                                        alert("accepted");
+                                        $.ajax({
+                                            type: "POST",
+                                            data: JSON.stringify(user),
+                                            url: "/api/friend/acceptrequest",
+                                            contentType: "application/json"
+                                        }).done(function () {
+                                            $('#' + item.Id).remove();
+                                        });
+                                    }); 
+                                    $('#'+item.Id+'d').click(function () {  
+                                        alert("declined");
+                                        $.ajax({
+                                            type: "POST",
+                                            data: JSON.stringify(user),
+                                            url: "/api/friend/declinerequest",
+                                            contentType: "application/json"
+                                        }).done(function () {
+                                            $('#' + item.Id).remove();
+                                        });
+                                    });
+                                });
+
+                            });
+                        });
+
+                    });
+                </script>
+            </li>
             <li>
                 @Html.ActionLink(User.Identity.GetUserName(), "Index", "User", new { id = User.Identity.GetUserId() }, null)
             </li>

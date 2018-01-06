@@ -18,7 +18,7 @@ namespace DatingApp.Models
 
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<Friends> Friends { get; set; }
+        public DbSet<Friend> Friends { get; set; }
 
         public static DataContext Create()
         {
@@ -28,7 +28,7 @@ namespace DatingApp.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Friends>()
+            modelBuilder.Entity<Friend>()
                .HasOptional<ApplicationUser>(s => s.RequestedBy)
                .WithMany()
                .WillCascadeOnDelete(true);
