@@ -20,14 +20,14 @@
                     $(document).ready(function () {
                         $('#dropDown').click(function () {
 
-                            alert('meny ska komma ner');
-
                             var user = { Id: '@User.Identity.GetUserId()' }
+                            var myUrl = '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "friend", id = "getrequests" })'
+
 
                             $.ajax({
-                                type: "POST",
+                                    type: "POST",
                                 data: JSON.stringify(user),
-                                url: "api/friend/getrequests",
+                                url: myUrl,
                                 contentType: "application/json"
                             }).done(function (get) {
                                 $("#dropDownUl").html('');
@@ -36,7 +36,6 @@
                                         ('<li id=' + item.Id + '>Vänförfrågan från: ' + item.UserName + ' <button id="' + item.Id + 'a" type="button">acceptera</button> <button id="' + item.Id + 'd" type="button">neka</button> </li>');
 
                                     $('#'+item.Id+'a').click(function () {
-                                        alert("accepted");
                                         $.ajax({
                                             type: "POST",
                                             data: JSON.stringify(user),
@@ -44,10 +43,9 @@
                                             contentType: "application/json"
                                         }).done(function () {
                                             $('#' + item.Id).remove();
-                                        });
-                                    }); 
-                                    $('#'+item.Id+'d').click(function () {  
-                                        alert("declined");
+                                            });
+                                        }); 
+                                    $('#'+item.Id+'d').click(function () {
                                         $.ajax({
                                             type: "POST",
                                             data: JSON.stringify(user),
@@ -55,12 +53,12 @@
                                             contentType: "application/json"
                                         }).done(function () {
                                             $('#' + item.Id).remove();
+                                            });
                                         });
                                     });
-                                });
 
+                                });
                             });
-                        });
 
                     });
                 </script>

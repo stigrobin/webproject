@@ -47,7 +47,7 @@ namespace DatingApp.Controllers.Api
         public void DeclineRequest(ApplicationUser user)
         {
             Friend friend = dataContext.Friends
-                .Where(x => x.RequestedTo_Id == user.Id).First();
+                .Where(x => x.RequestedTo_Id == user.Id && x.RequestStatuts == false).First();
             dataContext.Friends.Remove(friend);
             dataContext.SaveChanges();
         }

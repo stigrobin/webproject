@@ -45,7 +45,11 @@ namespace DomainLibrary.Repositories
                 Id = user3.Id, Content = GetBytesFromImg("stock.jpg"), ContentType = "image/jpeg", FileName = "stock.jpg" };
 
             context.Profiles.AddRange(new[] { profile1, profile2, profile3 });
-            //Messages
+            //Friendrequests
+            var request1 = new Friend { RequestedBy_Id = user3.Id, RequestedTo_Id = user2.Id, RequestStatuts = false };
+            var request2 = new Friend { RequestedBy_Id = user1.Id, RequestedTo_Id = user2.Id, RequestStatuts = false };
+
+            context.Friends.AddRange(new[] { request1, request2 });
         }
 
         private static byte[] GetBytesFromImg(string imagefilename)
