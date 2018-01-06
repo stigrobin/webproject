@@ -16,5 +16,6 @@ namespace DomainLibrary.Repositories
             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
             return imgSrc;
         }
+
     }
 }

@@ -70,7 +70,7 @@ namespace DatingApp.Controllers
             }
             var user = dataContext.Users.Find(User.Identity.GetUserId());
             user.Searchable = searchable;
-            bool exists = dataContext.Profiles.Any(x => x.Id == viewModel.Profile.Id);
+            bool exists = dataContext.Profiles.Any(x => x.Id == user.Id);
             if (exists)
             {
                 //modifiera profil om den redan finns
