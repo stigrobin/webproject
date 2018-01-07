@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Firstname" xml:space="preserve">
-    <value>HORNAMN</value>
+    <value>First name</value>
   </data>
   <data name="Lastname" xml:space="preserve">
-    <value>Efternamn</value>
+    <value>Last name</value>
   </data>
   <data name="NotConfirmedPW" xml:space="preserve">
-    <value>Lösenorden stämmer inte överens</value>
+    <value>Passwords do not match</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Lösenord</value>
+    <value>Password</value>
   </data>
   <data name="PasswordConfirm" xml:space="preserve">
-    <value>Bekräfta lösenordet</value>
+    <value>Confirm password</value>
   </data>
   <data name="PasswordLength" xml:space="preserve">
-    <value>Lösenordet måste vara längre än 6 tecken</value>
+    <value>Password must exceed 6 characters</value>
   </data>
   <data name="Rememberme" xml:space="preserve">
-    <value>Kom ihåg mig?</value>
+    <value>Remember me?</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DatingApp.Internationalization;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DatingApp.Models
@@ -55,10 +56,10 @@ namespace DatingApp.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Lösenord")]
+        [Display(ResourceType = typeof(Appresources), Name = nameof(Appresources.Password))]
         public string Password { get; set; }
 
-        [Display(Name = "Kom ihåg mig?")]
+        [Display(ResourceType = typeof(Appresources), Name = nameof(Appresources.Rememberme))]
         public bool RememberMe { get; set; }
     }
 
@@ -70,22 +71,22 @@ namespace DatingApp.Models
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Förnamn")]
+        [Display(ResourceType = typeof(Appresources), Name = nameof(Appresources.Firstname))]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Efternamn")]
+        [Display(ResourceType = typeof(Appresources), Name = nameof(Appresources.Lastname))]
         public string LastName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessageResourceType = typeof(Appresources), ErrorMessageResourceName = nameof(Appresources.PasswordLength), MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Lösenord")]
+        [Display(ResourceType = typeof(Appresources), Name = nameof(Appresources.Password))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Bekräfta lösenord")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(ResourceType = typeof(Appresources), Name = nameof(Appresources.PasswordConfirm))]
+        [Compare("Password", ErrorMessageResourceType = typeof(Appresources), ErrorMessageResourceName = nameof(Appresources.NotConfirmedPW))]
         public string ConfirmPassword { get; set; }
     }
 
