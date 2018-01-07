@@ -13,3 +13,11 @@
 .hrNoMargin {
     margin: 0 auto;
 }
+
+#file-upload {
+    display: none;
+}
+#file-upload-div {
+    padding-top: 20px;
+    padding-left: 0px;
+}
