@@ -39,14 +39,14 @@ namespace DatingApp.Controllers
                         .Where(x => x.Receiver == viewmodel.Profile.ProfileId).ToList();
                 }
 
-
+            }
                 viewmodel.ApplicationUser = new ApplicationUser
                 {
                     UserName = dataContext.Users
                     .Where(x => x.Id == myId).Select(x => x.UserName).Single()
                 };
 
-            }
+            
             FriendRepository friendRepository = new FriendRepository();
             bool pending = friendRepository.HasPendingRequest(myId, id);
             bool friend = friendRepository.IsFriend(myId, id);
@@ -80,7 +80,7 @@ namespace DatingApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(ProfileViewModel viewModel, HttpPostedFileBase upload, bool searchable)
+        public ActionResult Create(ProfileViewModel viewModel, HttpPostedFileBase upload, bool searchable, string id)
         {
             if (ModelState.IsValid == false)
             {
@@ -118,6 +118,7 @@ namespace DatingApp.Controllers
                     }
 
                 }
+                viewModel.Profile.Id = id;
                 dataContext.Profiles.Add(viewModel.Profile);
             }
 

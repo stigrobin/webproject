@@ -15,7 +15,6 @@ namespace DatingApp.ViewModels
         public Friend Friend { get; set; }
         public FriendState FriendState { get; set; }
 
-
     }
     [Flags]
     public enum FriendState

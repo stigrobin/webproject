@@ -143,10 +143,10 @@ namespace DatingApp.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", "User", new { id = User.Identity.GetUserId() });
             }
             AddErrors(result);
-            return View(model);
+            return RedirectToAction("Index", "User", new { id = User.Identity.GetUserId() });
         }
 
         //

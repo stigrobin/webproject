@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@{ DomainLibrary.Repositories.UserRepository userRepository = new DomainLibrary.Repositories.UserRepository(); }
 @if (Request.IsAuthenticated)
 {
 
@@ -63,7 +64,7 @@
                 </script>
             </li>
             <li>
-                @Html.ActionLink(User.Identity.GetUserName(), "Index", "User", new { id = User.Identity.GetUserId() }, null)
+                @Html.ActionLink(userRepository.GetFullName(User.Identity.GetUserId()), "Index", "User", new { id = User.Identity.GetUserId() }, null)
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
         </ul>

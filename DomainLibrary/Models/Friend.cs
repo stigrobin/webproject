@@ -12,13 +12,13 @@ namespace DomainLibrary.Models
     {
         public virtual int Id { get; set; }
 
-        
-        
+
+
         [ForeignKey("RequestedBy")]
         public virtual string RequestedBy_Id { get; set; }
         public virtual ApplicationUser RequestedBy { get; set; }
 
-        
+
         [ForeignKey("RequestedTo")]
         public virtual string RequestedTo_Id { get; set; }
         public virtual ApplicationUser RequestedTo { get; set; }

@@ -40,6 +40,7 @@
 
         if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
         {
+            @Html.ActionLink("Ändra lösenord", "ChangePassword", "Manage")
             @Html.ActionLink("Ändra profil", "EditProfile", "User")
             @Html.ActionLink("Mina vänner", "MyFriends", "User")
         }
