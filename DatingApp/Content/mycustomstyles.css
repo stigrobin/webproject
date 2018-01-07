@@ -1,0 +1,15 @@
+﻿#dropDownUl {
+    position: fixed;
+    background-color: darkgrey;
+    list-style: none;
+    padding-left: 15px;
+    padding-bottom: 2px;
+}
+.dropDownListItem {
+    padding-top: 2px;
+    padding-right: 2px;
+    padding-bottom: 5px;
+}
+.hrNoMargin {
+    margin: 0 auto;
+}

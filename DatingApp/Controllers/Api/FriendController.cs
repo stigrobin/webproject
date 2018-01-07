@@ -1,4 +1,5 @@
 ﻿using DatingApp.Models;
+using DatingApp.ViewModels;
 using DomainLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -32,10 +33,10 @@ namespace DatingApp.Controllers.Api
 
         [HttpPost]
         [Route("api/friend/acceptrequest")]
-        public void AcceptRequest(ApplicationUser user)
+        public void AcceptRequest(FriendRequestViewModel viewModel)
         {
             Friend friend = dataContext.Friends
-                .Where(x => x.RequestedTo_Id == user.Id).FirstOrDefault();
+                .Where(x => x.RequestedTo_Id == viewModel.UserModel.Id && x.RequestedBy_Id == viewModel.TargetModel.Id && x.RequestStatuts == false).FirstOrDefault();
             friend.RequestStatuts = true;
 
             dataContext.Entry(friend).State = System.Data.Entity.EntityState.Modified;
@@ -44,10 +45,10 @@ namespace DatingApp.Controllers.Api
 
         [HttpPost]
         [Route("api/friend/declinerequest")]
-        public void DeclineRequest(ApplicationUser user)
+        public void DeclineRequest(FriendRequestViewModel viewModel)
         {
             Friend friend = dataContext.Friends
-                .Where(x => x.RequestedTo_Id == user.Id && x.RequestStatuts == false).First();
+                .Where(x => x.RequestedTo_Id == viewModel.UserModel.Id && x.RequestedBy_Id == viewModel.TargetModel.Id && x.RequestStatuts == false).FirstOrDefault();
             dataContext.Friends.Remove(friend);
             dataContext.SaveChanges();
         }

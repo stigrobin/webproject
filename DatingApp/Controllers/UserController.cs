@@ -1,6 +1,7 @@
 ﻿using DatingApp.Models;
 using DatingApp.ViewModels;
 using DomainLibrary.Models;
+using DomainLibrary.Repositories;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Drawing;
@@ -22,6 +23,13 @@ namespace DatingApp.Controllers
         {
             PostMessageViewModel viewmodel = new PostMessageViewModel();
 
+            string myId = User.Identity.GetUserId();
+
+            //jobbar med att kolla om man är vän med profilen etc
+            FriendRepository friendRepository = new FriendRepository();
+            friendRepository.HasPendingRequest(myId, id);
+            friendRepository.IsFriend(myId, id);
+
 
             viewmodel.Profile = dataContext.Profiles
            .FirstOrDefault(x => x.Id == id);
@@ -34,7 +42,6 @@ namespace DatingApp.Controllers
                         .Where(x => x.Receiver == viewmodel.Profile.ProfileId).ToList();
                 }
 
-                string myId = User.Identity.GetUserId();
 
                 viewmodel.ApplicationUser = new ApplicationUser
                 {
@@ -83,8 +90,7 @@ namespace DatingApp.Controllers
                     using (var reader = new BinaryReader(upload.InputStream))
                     {
                         existing.Content = reader.ReadBytes(upload.ContentLength);
-                    }
-
+                    }   
                 }
                 dataContext.Entry(existing).State = System.Data.Entity.EntityState.Modified;
             }

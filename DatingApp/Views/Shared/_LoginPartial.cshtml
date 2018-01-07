@@ -20,9 +20,8 @@
                     $(document).ready(function () {
                         $('#dropDown').click(function () {
 
-                            var user = { Id: '@User.Identity.GetUserId()' }
-                            var myUrl = '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "friend", id = "getrequests" })'
-
+                            var user = { Id: '@User.Identity.GetUserId()' };
+                            var myUrl = '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "friend", id = "getrequests" })';
 
                             $.ajax({
                                     type: "POST",
@@ -32,23 +31,24 @@
                             }).done(function (get) {
                                 $("#dropDownUl").html('');
                                 $.each(get, function (key, item) {
+                                    var target = { Id: item.Id };
                                     $("#dropDownUl").append
-                                        ('<li id=' + item.Id + '>Vänförfrågan från: ' + item.UserName + ' <button id="' + item.Id + 'a" type="button">acceptera</button> <button id="' + item.Id + 'd" type="button">neka</button> </li>');
+                                        ('<li class="dropDownListItem" id=' + item.Id + '>Vänförfrågan från: ' + item.UserName + ' <button id="' + item.Id + 'a" type="button">acceptera</button> <button id="' + item.Id + 'd" type="button">neka</button> </li><hr class="hrNoMargin"/>');
 
                                     $('#'+item.Id+'a').click(function () {
                                         $.ajax({
                                             type: "POST",
-                                            data: JSON.stringify(user),
+                                            data: JSON.stringify({ usermodel: user, targetmodel: target }),
                                             url: "/api/friend/acceptrequest",
                                             contentType: "application/json"
                                         }).done(function () {
                                             $('#' + item.Id).remove();
                                             });
-                                        }); 
+                                        });
                                     $('#'+item.Id+'d').click(function () {
                                         $.ajax({
                                             type: "POST",
-                                            data: JSON.stringify(user),
+                                            data: JSON.stringify({ usermodel: user, targetmodel: target }),
                                             url: "/api/friend/declinerequest",
                                             contentType: "application/json"
                                         }).done(function () {
@@ -56,7 +56,6 @@
                                             });
                                         });
                                     });
-
                                 });
                             });
 
