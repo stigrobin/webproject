@@ -17,7 +17,7 @@ namespace DatingApp.Controllers
         public ActionResult Index()
         {
             int count = 0;
-            var profiles = dataContext.Profiles.Where(x => x.FileName != null).ToList();
+            List<Profile> profiles = dataContext.Profiles.Where(x => x.FileName != null).ToList();
             Random random = new Random();
             //int Profilecount = profiles.Count();
             List<Profile> sources = new List<Profile>();

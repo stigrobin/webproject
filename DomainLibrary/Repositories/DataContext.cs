@@ -34,8 +34,5 @@ namespace DatingApp.Models
                .WillCascadeOnDelete(true);
             base.OnModelCreating(modelBuilder);
         }
-
-
-
-        }
+    }
 }

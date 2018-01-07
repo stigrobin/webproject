@@ -21,14 +21,11 @@ namespace DatingApp.Controllers
         [Authorize]
         public ActionResult Index(string id)
         {
-            PostMessageViewModel viewmodel = new PostMessageViewModel();
+            ProfileViewModel viewmodel = new ProfileViewModel();
 
             string myId = User.Identity.GetUserId();
 
-            //jobbar med att kolla om man är vän med profilen etc
-            FriendRepository friendRepository = new FriendRepository();
-            friendRepository.HasPendingRequest(myId, id);
-            friendRepository.IsFriend(myId, id);
+
 
 
             viewmodel.Profile = dataContext.Profiles
@@ -50,7 +47,21 @@ namespace DatingApp.Controllers
                 };
 
             }
-            
+            FriendRepository friendRepository = new FriendRepository();
+            bool pending = friendRepository.HasPendingRequest(myId, id);
+            bool friend = friendRepository.IsFriend(myId, id);
+            if(pending && !friend)
+            {
+                viewmodel.FriendState = FriendState.IsPending;
+            }
+            else if(!pending && friend)
+            {
+                viewmodel.FriendState = FriendState.IsFriend;
+            }
+            else if(!pending && !friend)
+            {
+                viewmodel.FriendState = FriendState.IsNotFriend;
+            }
 
             return View(viewmodel);
         }
@@ -59,7 +70,7 @@ namespace DatingApp.Controllers
         public ActionResult EditProfile()
         {
             var userId = User.Identity.GetUserId();
-            PostMessageViewModel viewModel = new PostMessageViewModel();
+            ProfileViewModel viewModel = new ProfileViewModel();
             var user = dataContext.Users.Where(x => x.Id == userId).FirstOrDefault();
             var profile = dataContext.Profiles.Where(x => x.Id == userId).FirstOrDefault();
             viewModel.ApplicationUser = user;
@@ -69,7 +80,7 @@ namespace DatingApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(PostMessageViewModel viewModel, HttpPostedFileBase upload, bool searchable)
+        public ActionResult Create(ProfileViewModel viewModel, HttpPostedFileBase upload, bool searchable)
         {
             if (ModelState.IsValid == false)
             {
@@ -125,11 +136,29 @@ namespace DatingApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult AddFriend(PostMessageViewModel ViewModel)
+        public ActionResult AddFriend(ProfileViewModel ViewModel)
         {
             dataContext.Friends.Add(ViewModel.Friend);
             dataContext.SaveChanges();
             return RedirectToAction("Index", new { id = ViewModel.Friend.RequestedTo_Id });
+        }
+
+        [Authorize]
+        public ActionResult MyFriends()
+        {
+            string myId = User.Identity.GetUserId();
+            List<Friend> isFriendsWithUser = dataContext.Friends
+                .Where(x => x.RequestedBy_Id == myId && x.RequestStatuts == true || x.RequestedTo_Id == myId && x.RequestStatuts == true).ToList();
+
+            List<ApplicationUser> friends = new List<ApplicationUser>();
+
+            foreach (var item in isFriendsWithUser)
+            {
+                ApplicationUser user = dataContext.Users
+                    .Where(x => x.Id == item.RequestedBy_Id || x.Id == item.RequestedTo_Id).FirstOrDefault();
+                friends.Add(user);
+            }
+            return View(friends);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace DatingApp.Controllers.Api
         DataContext dataContext = new DataContext();
 
         [HttpPost]
-        public Message Send(PostMessageViewModel viewmodel)
+        public Message Send(ProfileViewModel viewmodel)
         {
 
             viewmodel.Message.Author = User.Identity.GetUserId();

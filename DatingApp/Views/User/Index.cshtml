@@ -1,4 +1,4 @@
-﻿@model DatingApp.ViewModels.PostMessageViewModel
+﻿@model DatingApp.ViewModels.ProfileViewModel
 @using Microsoft.AspNet.Identity
 @using System.Drawing
 @using System.IO
@@ -38,11 +38,10 @@
 <p>
     @{
 
-
-
         if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
         {
             @Html.ActionLink("Ändra profil", "EditProfile", "User")
+            @Html.ActionLink("Mina vänner", "MyFriends", "User")
         }
         else if (Url.RequestContext.RouteData.Values["id"].ToString() != User.Identity.GetUserId())
         {
@@ -52,12 +51,23 @@
                 RequestedTo_Id = Url.RequestContext.RouteData.Values["id"].ToString()
             };
 
-            using (Html.BeginForm("AddFriend", "User", new { id = Model.Friend.RequestedTo_Id }, FormMethod.Post))
+            if (Model.FriendState == DatingApp.ViewModels.FriendState.IsNotFriend)
             {
+                using (Html.BeginForm("AddFriend", "User", new { id = Model.Friend.RequestedTo_Id }, FormMethod.Post))
+                {
                 @Html.HiddenFor(m => m.Friend.RequestedBy_Id)
                 @Html.HiddenFor(m => m.Friend.RequestedTo_Id)
 
                 <input type="submit" value="Lägg till vän" />
+                }
+            }
+            else if(Model.FriendState == DatingApp.ViewModels.FriendState.IsPending)
+            {
+                <button type="button" disabled>Vänförfrågan skickad</button>
+            }
+            else if(Model.FriendState == DatingApp.ViewModels.FriendState.IsFriend)
+            {
+                <button type="button" disabled>Vänner</button>
             }
         }
 
