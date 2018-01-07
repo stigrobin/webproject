@@ -40,9 +40,9 @@
 
         if (Url.RequestContext.RouteData.Values["id"].ToString() == User.Identity.GetUserId())
         {
-            @Html.ActionLink("Ändra lösenord", "ChangePassword", "Manage")
-            @Html.ActionLink("Ändra profil", "EditProfile", "User")
-            @Html.ActionLink("Mina vänner", "MyFriends", "User")
+            <button type="button" class="btn btn-default">@Html.ActionLink("Ändra lösenord", "ChangePassword", "Manage")</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("Ändra profil", "EditProfile", "User")</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("Mina vänner", "MyFriends", "User")</button>
         }
         else if (Url.RequestContext.RouteData.Values["id"].ToString() != User.Identity.GetUserId())
         {
@@ -59,27 +59,26 @@
                 @Html.HiddenFor(m => m.Friend.RequestedBy_Id)
                 @Html.HiddenFor(m => m.Friend.RequestedTo_Id)
 
-                <input type="submit" value="Lägg till vän" />
+                <input type="submit" class="btn btn-default" value="Lägg till vän" />
                 }
             }
             else if(Model.FriendState == DatingApp.ViewModels.FriendState.IsPending)
             {
-                <button type="button" disabled>Vänförfrågan skickad</button>
+                <button type="button" class="btn btn-default" disabled>Vänförfrågan skickad</button>
             }
             else if(Model.FriendState == DatingApp.ViewModels.FriendState.IsFriend)
             {
-                <button type="button" disabled>Vänner</button>
+                <button type="button" class="btn btn-default" disabled>Vänner</button>
             }
         }
 
 
-        @*@Html.ActionLink("Lägg till vän", "AddFriend", "User")*@
     }
 
 </p>
 
 <textarea rows="2" cols="50" id="txtPost" resize: none></textarea>
-<button id="btnSend">Skicka</button>
+<button id="btnSend" class="btn btn-default">Skicka</button>
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     

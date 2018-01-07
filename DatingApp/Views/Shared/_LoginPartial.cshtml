@@ -13,7 +13,7 @@
                      width: 50%;
                      margin:  0 auto;
                      margin-top: 3%;">
-                    <input type="submit" value="Sök" formaction="@Url.Action("SearchResults", "User")" />
+                    <input type="submit" value="Sök" class="btn btn-default" formaction="@Url.Action("SearchResults", "User")" />
             </li>
             <li id="dropDownList"><a id="dropDown" href="#">Vänförfrågningar</a><ul id="dropDownUl"></ul>
                 @Scripts.Render("~/bundles/jquery")
@@ -34,7 +34,7 @@
                                 $.each(get, function (key, item) {
                                     var target = { Id: item.Id };
                                     $("#dropDownUl").append
-                                        ('<li class="dropDownListItem" id=' + item.Id + '>Vänförfrågan från: ' + item.UserName + ' <button id="' + item.Id + 'a" type="button">acceptera</button> <button id="' + item.Id + 'd" type="button">neka</button> </li><hr class="hrNoMargin"/>');
+                                        ('<li class="dropDownListItem" id=' + item.Id + '>Vänförfrågan från: ' + item.UserName + ' <button id="' + item.Id + 'a" class="btn btn-default" type="button">acceptera</button> <button id="' + item.Id + 'd" class="btn btn-default" type="button">neka</button> </li><hr class="hrNoMargin"/>');
 
                                     $('#'+item.Id+'a').click(function () {
                                         $.ajax({
