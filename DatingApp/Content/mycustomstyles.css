@@ -21,3 +21,12 @@
     padding-top: 20px;
     padding-left: 0px;
 }
+
+#example-profiles {
+    list-style: none;
+    display: flex;
+}
+.example-profile {
+    margin-left: 10px;
+    margin-right: 10px;
+}

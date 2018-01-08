@@ -24,7 +24,7 @@
 
                             var user = { Id: '@User.Identity.GetUserId()' };
                             var myUrl = '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "friend", id = "getrequests" })';
-
+                            //Hämtar alla vänförfrågningar till inloggade användaren
                             $.ajax({
                                     type: "POST",
                                 data: JSON.stringify(user),
@@ -34,6 +34,8 @@
                                 $("#dropDownUl").html('');
                                 $.each(get, function (key, item) {
                                     var target = { Id: item.Id };
+                                    /*Appendar in varje förfrågan som ett list-element 
+                                    med två klickfunktioner för att acceptera eller neka förfrågan. */
                                     $("#dropDownUl").append
                                         ('<li class="dropDownListItem" id=' + item.Id + '>@Appresources.RequestFrom ' + item.FirstName + ' ' + item.LastName + ' <button id="' + item.Id + 'a" class="btn btn-default" type="button">@Appresources.Accept</button> <button id="' + item.Id + 'd" class="btn btn-default" type="button">@Appresources.Deny</button> </li><hr class="hrNoMargin"/>');
 

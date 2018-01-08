@@ -18,15 +18,23 @@ namespace DatingApp.Controllers.Api
         [HttpPost]
         public Message Send(ProfileViewModel viewmodel)
         {
-
-            viewmodel.Message.Author = User.Identity.GetUserId();
-            viewmodel.Message.Receiver = dataContext.Profiles
-                .Where(x => x.Id == viewmodel.Profile.Id)
-                .Select(x => x.ProfileId)
-                .FirstOrDefault();
-            dataContext.Messages.Add(viewmodel.Message);
-            dataContext.SaveChanges();
-            return viewmodel.Message;
+            if (ModelState.IsValid == false)
+            {
+                return viewmodel.Message;
+            }
+            else
+            {
+                viewmodel.Message.Author = User.Identity.GetUserId();
+                viewmodel.Message.Receiver = dataContext.Profiles
+                    .Where(x => x.Id == viewmodel.Profile.Id)
+                    .Select(x => x.ProfileId)
+                    .FirstOrDefault();
+                dataContext.Messages.Add(viewmodel.Message);
+                dataContext.SaveChanges();
+                return viewmodel.Message;
+            }
         }
+
+
     }
 }

@@ -15,6 +15,7 @@ namespace DomainLibrary.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [StringLength(150, ErrorMessage = "Ett inlägg måste vara mindre än 150 tecken.")]
         public string Content { get; set; }
 
         [ForeignKey("ApplicationUser")]

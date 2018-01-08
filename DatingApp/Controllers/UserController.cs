@@ -86,14 +86,17 @@ namespace DatingApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(ProfileViewModel viewModel, HttpPostedFileBase upload, bool searchable, string id)
+        public ActionResult EditProfile(ProfileViewModel viewModel, HttpPostedFileBase upload, bool searchable, string id)
         {
-            if (ModelState.IsValid == false)
-            {
-                return RedirectToAction("EditProfile", new { id = User.Identity.GetUserId() });
-            }
             var user = dataContext.Users.Find(User.Identity.GetUserId());
             user.Searchable = searchable;
+
+            if (ModelState.IsValid == false)
+            {
+                viewModel.ApplicationUser = user;
+                return View(viewModel);
+            }
+
             bool exists = dataContext.Profiles.Any(x => x.Id == user.Id);
             if (exists)
             {

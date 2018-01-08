@@ -62,11 +62,11 @@
                 <input type="submit" class="btn btn-default" value="Lägg till vän" />
                 }
             }
-            else if(Model.FriendState == DatingApp.ViewModels.FriendState.IsPending)
+            else if (Model.FriendState == DatingApp.ViewModels.FriendState.IsPending)
             {
                 <button type="button" class="btn btn-default" disabled>Vänförfrågan skickad</button>
             }
-            else if(Model.FriendState == DatingApp.ViewModels.FriendState.IsFriend)
+            else if (Model.FriendState == DatingApp.ViewModels.FriendState.IsFriend)
             {
                 <button type="button" class="btn btn-default" disabled>Vänner</button>
             }
@@ -79,6 +79,8 @@
 
 <textarea rows="2" cols="50" id="txtPost" resize: none></textarea>
 <button id="btnSend" class="btn btn-default">Skicka</button>
+@Html.ValidationSummary(true, "")
+@Html.ValidationMessageFor(model => model.Message.Content)
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
 
@@ -97,13 +99,18 @@
             url: "/api/message/send",
             contentType: "application/json"
         }).done(function (prf) {
-            $(".table").append("<tr><td>" + prf.Content + "</td><td>" + '@Model.ApplicationUser.FirstName' + " " + '@Model.ApplicationUser.LastName' + "</td></tr>");
+            if (prf.Content.length > 150) {
+                $("#error-for-messages").html('Ett inlägg får inte vara längre än 150 tecken. (' + prf.Content.length + ')');
+            }
+            else {
+                $(".table").append("<tr><td>" + prf.Content + "</td><td>" + '@Model.ApplicationUser.FirstName' + " " + '@Model.ApplicationUser.LastName' + "</td></tr>");
+            }
         });
     });
 
 </script>
 
-
+<div id="error-for-messages"></div>
 <table class="table">
     <tr>
         <th>

@@ -19,6 +19,12 @@ namespace DatingApp
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "Profile",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional }
+                );
+
         }
     }
 }

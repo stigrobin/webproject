@@ -54,8 +54,8 @@ namespace DomainLibrary.Repositories
 
         private static byte[] GetBytesFromImg(string imagefilename)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            byte[] b = File.ReadAllBytes(path + @"\" + imagefilename);
+            string path = AppDomain.CurrentDomain.BaseDirectory + @"Images\" + imagefilename;
+            byte[] b = File.ReadAllBytes(path);
             return b;
         }
     }
