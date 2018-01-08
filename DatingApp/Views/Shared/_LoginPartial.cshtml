@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @{ DomainLibrary.Repositories.UserRepository userRepository = new DomainLibrary.Repositories.UserRepository(); }
+@using DatingApp.Internationalization;
 @if (Request.IsAuthenticated)
 {
 
@@ -13,9 +14,9 @@
                      width: 50%;
                      margin:  0 auto;
                      margin-top: 3%;">
-                    <input type="submit" value="Sök" class="btn btn-default" formaction="@Url.Action("SearchResults", "User")" />
+                    <input type="submit" value="@Appresources.Search" class="btn btn-default" formaction="@Url.Action("SearchResults", "User")" />
             </li>
-            <li id="dropDownList"><a id="dropDown" href="#">Vänförfrågningar</a><ul id="dropDownUl"></ul>
+            <li id="dropDownList"><a id="dropDown" href="#">@Appresources.FriendRequests</a><ul id="dropDownUl"></ul>
                 @Scripts.Render("~/bundles/jquery")
                 <script type="text/javascript">
                     $(document).ready(function () {
@@ -34,7 +35,7 @@
                                 $.each(get, function (key, item) {
                                     var target = { Id: item.Id };
                                     $("#dropDownUl").append
-                                        ('<li class="dropDownListItem" id=' + item.Id + '>Vänförfrågan från: ' + item.UserName + ' <button id="' + item.Id + 'a" class="btn btn-default" type="button">acceptera</button> <button id="' + item.Id + 'd" class="btn btn-default" type="button">neka</button> </li><hr class="hrNoMargin"/>');
+                                        ('<li class="dropDownListItem" id=' + item.Id + '>@Appresources.RequestFrom ' + item.FirstName + ' ' + item.LastName + ' <button id="' + item.Id + 'a" class="btn btn-default" type="button">@Appresources.Accept</button> <button id="' + item.Id + 'd" class="btn btn-default" type="button">@Appresources.Deny</button> </li><hr class="hrNoMargin"/>');
 
                                     $('#'+item.Id+'a').click(function () {
                                         $.ajax({
@@ -66,14 +67,14 @@
             <li>
                 @Html.ActionLink(userRepository.GetFullName(User.Identity.GetUserId()), "Index", "User", new { id = User.Identity.GetUserId() }, null)
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">@Appresources.LogOut</a></li>
         </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink(@Appresources.Reg, "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink(@Appresources.LogIn, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

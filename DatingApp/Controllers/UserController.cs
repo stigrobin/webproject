@@ -40,11 +40,17 @@ namespace DatingApp.Controllers
                 }
 
             }
-                viewmodel.ApplicationUser = new ApplicationUser
-                {
-                    UserName = dataContext.Users
-                    .Where(x => x.Id == myId).Select(x => x.UserName).Single()
-                };
+            viewmodel.ApplicationUser = new ApplicationUser
+            {
+                UserName = dataContext.Users
+                .Where(x => x.Id == myId).Select(x => x.UserName).Single(),
+
+            FirstName = dataContext.Users
+            .Where(x => x.Id == myId).Select(x => x.FirstName).Single(),
+
+            LastName = dataContext.Users
+            .Where(x => x.Id == myId).Select(x => x.LastName).Single()
+            };
 
             
             FriendRepository friendRepository = new FriendRepository();

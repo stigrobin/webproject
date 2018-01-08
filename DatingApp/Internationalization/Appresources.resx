@@ -117,11 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>Acceptera</value>
+  </data>
+  <data name="Deny" xml:space="preserve">
+    <value>Neka</value>
+  </data>
   <data name="Firstname" xml:space="preserve">
-    <value>HORNAMN</value>
+    <value>Förnamn</value>
+  </data>
+  <data name="Footer" xml:space="preserve">
+    <value>Din båtdating online</value>
+  </data>
+  <data name="FriendRequests" xml:space="preserve">
+    <value>Vänförfrågningar</value>
+  </data>
+  <data name="IndexWelcome" xml:space="preserve">
+    <value>Välkommen till Ferry dating. Din båtdating på nätet!</value>
   </data>
   <data name="Lastname" xml:space="preserve">
     <value>Efternamn</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Logga in</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Logga ut</value>
   </data>
   <data name="NotConfirmedPW" xml:space="preserve">
     <value>Lösenorden stämmer inte överens</value>
@@ -135,7 +156,16 @@
   <data name="PasswordLength" xml:space="preserve">
     <value>Lösenordet måste vara längre än 6 tecken</value>
   </data>
+  <data name="Reg" xml:space="preserve">
+    <value>Registrera</value>
+  </data>
   <data name="Rememberme" xml:space="preserve">
     <value>Kom ihåg mig?</value>
+  </data>
+  <data name="RequestFrom" xml:space="preserve">
+    <value>Vänförfrågan skickad från:</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Sök</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿@model DatingApp.ViewModels.ProfileViewModel
+@{ DomainLibrary.Repositories.UserRepository userRepository = new DomainLibrary.Repositories.UserRepository(); }
 @using Microsoft.AspNet.Identity
 @using System.Drawing
 @using System.IO
@@ -7,21 +8,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>@userRepository.GetFullName(Url.RequestContext.RouteData.Values["id"].ToString())</h2>
 
 <div>
-    <h4>Profile</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal"> 
         <dt>
-            @Html.DisplayNameFor(model => model.Profile.Presentation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Profile.Presentation)
-        </dd>
-        <dt>
-            Avatar
+            Profilbild
         </dt>
         <dd>
             @{
@@ -33,6 +26,13 @@
                 }
             }
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Profile.Presentation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Profile.Presentation)
+        </dd>
+
     </dl>
 </div>
 <p>
@@ -81,7 +81,7 @@
 <button id="btnSend" class="btn btn-default">Skicka</button>
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
-    
+
     $(document).on('click', '#btnSend', function () {
 
         var url = window.location.pathname;
@@ -97,10 +97,10 @@
             url: "/api/message/send",
             contentType: "application/json"
         }).done(function (prf) {
-            $(".table").append("<tr><td>" + prf.Content + "</td><td>" + '@Model.ApplicationUser.UserName' + "</td></tr>");
+            $(".table").append("<tr><td>" + prf.Content + "</td><td>" + '@Model.ApplicationUser.FirstName' + " " + '@Model.ApplicationUser.LastName' + "</td></tr>");
         });
     });
-        
+
 </script>
 
 
@@ -122,7 +122,8 @@
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.ApplicationUser.UserName)
+                    @Html.DisplayFor(model => model.ApplicationUser.FirstName)
+                    @Html.DisplayFor(model => model.ApplicationUser.LastName)
                 </td>
             </tr>
         }

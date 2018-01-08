@@ -1,4 +1,5 @@
-﻿@model List<DomainLibrary.Models.Profile>
+﻿@using DatingApp.Internationalization;
+@model List<DomainLibrary.Models.Profile>
 @{ DomainLibrary.Repositories.ProfileRepository profileRepository = new DomainLibrary.Repositories.ProfileRepository(); }
 @{
     ViewBag.Title = "Home Page";
@@ -6,7 +7,7 @@
 
 <div class="jumbotron">
     <h1>Ferry dating</h1>
-    <p> Välkommen till Ferry dating. Din båtdating på nätet! </p>
+    <p> @Appresources.IndexWelcome </p>
     <div>
         <div>
             <ul>

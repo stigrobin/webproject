@@ -1,21 +1,18 @@
 ﻿@model IEnumerable<DomainLibrary.Models.ApplicationUser>
 
 @{
-    ViewBag.Title = "SearchResults";
+    ViewBag.Title = "Sökresultat";
 }
 
-<h2>SearchResults</h2>
+<h2>Sökresultat</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            Förnamn
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            Efternamn
         </th>
     </tr>
 

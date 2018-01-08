@@ -71,7 +71,7 @@ namespace DatingApp.Models
         public string Email { get; set; }
 
         [Required]
-        [Display(ResourceType = typeof(Appresources), Name = nameof(Appresources.Firstname))]
+        [Display(Name = "Firstname", ResourceType = typeof(Appresources))]
         public string FirstName { get; set; }
 
         [Required]

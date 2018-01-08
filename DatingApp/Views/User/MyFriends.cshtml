@@ -1,24 +1,22 @@
 ﻿@model IEnumerable<DomainLibrary.Models.ApplicationUser>
 
 @{
-    ViewBag.Title = "MyFriends";
+    ViewBag.Title = "Mina vänner";
 }
 
-<h2>MyFriends</h2>
+<h2>Mina vänner</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            Förnamn
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            Efternamn
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            Användarnamn
         </th>
         <th></th>
     </tr>
@@ -34,9 +32,6 @@
         
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
