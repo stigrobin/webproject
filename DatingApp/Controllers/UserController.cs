@@ -52,6 +52,9 @@ namespace DatingApp.Controllers
             .Where(x => x.Id == myId).Select(x => x.LastName).Single()
             };
 
+            viewmodel.Messages = dataContext.Messages
+                .Where(x => x.Receiver == viewmodel.Profile.ProfileId);
+
             
             FriendRepository friendRepository = new FriendRepository();
             bool pending = friendRepository.HasPendingRequest(myId, id);

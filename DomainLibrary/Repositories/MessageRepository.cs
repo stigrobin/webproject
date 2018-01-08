@@ -1,20 +1,24 @@
 ﻿using DatingApp.Models;
 using DomainLibrary.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DomainLibrary.Repositories
 {
-    public class UserRepository
+    public class MessageRepository
     {
         DataContext dataContext = new DataContext();
 
-        public string GetFullName(string id)
+        public string GetAuthorFullName(Message message)
         {
             ApplicationUser user = dataContext.Users
-                .Where(x => x.Id == id).First();
+                .Where(x => x.Id == message.Author).First();
+
             string fullName = user.FirstName + " " + user.LastName;
             return fullName;
         }
-
     }
 }

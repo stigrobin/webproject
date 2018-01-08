@@ -1,6 +1,7 @@
 ﻿@model DatingApp.ViewModels.ProfileViewModel
 @{ DomainLibrary.Repositories.UserRepository userRepository = new DomainLibrary.Repositories.UserRepository(); }
 @using Microsoft.AspNet.Identity
+@using DomainLibrary.Repositories;
 @using System.Drawing
 @using System.IO
 
@@ -122,6 +123,7 @@
     </tr>
     @if (Model.Messages != null)
     {
+        MessageRepository messageRepository = new MessageRepository();
         foreach (var item in Model.Messages)
         {
             <tr>
@@ -129,8 +131,7 @@
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.ApplicationUser.FirstName)
-                    @Html.DisplayFor(model => model.ApplicationUser.LastName)
+                    @messageRepository.GetAuthorFullName(item)
                 </td>
             </tr>
         }
