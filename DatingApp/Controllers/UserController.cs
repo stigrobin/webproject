@@ -90,7 +90,7 @@ namespace DatingApp.Controllers
         {
             if (ModelState.IsValid == false)
             {
-                return View();
+                return RedirectToAction("EditProfile", new { id = User.Identity.GetUserId() });
             }
             var user = dataContext.Users.Find(User.Identity.GetUserId());
             user.Searchable = searchable;

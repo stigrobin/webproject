@@ -17,6 +17,8 @@ namespace DomainLibrary.Models
         public int ProfileId { get; set; }
 
         //presentation
+        [Required(ErrorMessage = "Presentationen måste vara mindre än 500 tecken.")]
+        [MaxLength(500)]
         public string Presentation { get; set; }
         
         //Avatar 

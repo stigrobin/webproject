@@ -14,12 +14,13 @@
         </dt>
 
         <dd>
-            @Html.TextBoxFor(model => model.Profile.Presentation)
+            @Html.TextAreaFor(model => model.Profile.Presentation)
+            @Html.ValidationMessageFor(model => model.Profile.Presentation)
 
         </dd>
 
         <dt>
-            Sökbar? @Html.CheckBox("Searchable", Model.ApplicationUser.Searchable); 
+            Sökbar? @Html.CheckBox("Searchable", Model.ApplicationUser.Searchable)
         </dt>
 
         <dd>
