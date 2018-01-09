@@ -30,6 +30,7 @@ namespace DatingApp.Controllers.Api
                     .Select(x => x.ProfileId)
                     .FirstOrDefault();
                 dataContext.Messages.Add(viewmodel.Message);
+
                 dataContext.SaveChanges();
                 return viewmodel.Message;
             }

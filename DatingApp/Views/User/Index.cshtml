@@ -103,6 +103,9 @@
             if (prf.Content.length > 150) {
                 $("#error-for-messages").html('Ett inlägg får inte vara längre än 150 tecken. (' + prf.Content.length + ')');
             }
+            else if (prf.Content.length == 0) {
+                $("#error-for-messages").html('Ett inlägg får inte vara tomt');
+            }
             else {
                 $(".table").append("<tr><td>" + prf.Content + "</td><td>" + '@Model.ApplicationUser.FirstName' + " " + '@Model.ApplicationUser.LastName' + "</td></tr>");
             }

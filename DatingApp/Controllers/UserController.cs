@@ -40,6 +40,12 @@ namespace DatingApp.Controllers
                 }
 
             }
+            else if(viewmodel.Profile == null)
+            {
+                viewmodel.Profile = new Profile { Id = id };
+                dataContext.Profiles.Add(viewmodel.Profile);
+                dataContext.SaveChanges();
+            }
             viewmodel.ApplicationUser = new ApplicationUser
             {
                 UserName = dataContext.Users
@@ -52,8 +58,7 @@ namespace DatingApp.Controllers
             .Where(x => x.Id == myId).Select(x => x.LastName).Single()
             };
 
-            viewmodel.Messages = dataContext.Messages
-                .Where(x => x.Receiver == viewmodel.Profile.ProfileId);
+
 
             
             FriendRepository friendRepository = new FriendRepository();
@@ -168,7 +173,7 @@ namespace DatingApp.Controllers
             foreach (var item in isFriendsWithUser)
             {
                 ApplicationUser user = dataContext.Users
-                    .Where(x => x.Id == item.RequestedBy_Id || x.Id == item.RequestedTo_Id).FirstOrDefault();
+                    .Where(x => x.Id == item.RequestedBy_Id && x.Id != myId|| x.Id == item.RequestedTo_Id && x.Id != myId).FirstOrDefault();
                 friends.Add(user);
             }
             return View(friends);

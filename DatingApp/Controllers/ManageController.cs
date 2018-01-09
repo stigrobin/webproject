@@ -131,10 +131,6 @@ namespace DatingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
@@ -146,7 +142,7 @@ namespace DatingApp.Controllers
                 return RedirectToAction("Index", "User", new { id = User.Identity.GetUserId() });
             }
             AddErrors(result);
-            return RedirectToAction("Index", "User", new { id = User.Identity.GetUserId() });
+            return View(model);
         }
 
         //
